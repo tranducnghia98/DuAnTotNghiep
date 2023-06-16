@@ -30,7 +30,7 @@ function ListProduct(keyApi) {
             {products.map((product, index) => {
                    
                       return (
-                        <ProductItem
+                        <ProductItem key={index}
                         vehicleId={product.vehicleId}
                         renByDay={product.rentByDay}
                         vehicleName={product.vehicleName}

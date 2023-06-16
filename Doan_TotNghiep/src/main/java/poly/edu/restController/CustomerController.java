@@ -7,6 +7,7 @@ import poly.edu.model.Customer;
 import poly.edu.service.CustomerService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -23,14 +24,10 @@ public class CustomerController {
 
     // API để lấy thông tin của một khách hàng dựa trên cusUsername
     @GetMapping("/findById/{cusUsername}")
-    public ResponseEntity<Customer> getCustomerByUsername(@PathVariable String cusUsername) {
-        Customer customer = customerService.getCustomerByUsername(cusUsername);
-        if (customer != null) {
-            return ResponseEntity.ok(customer);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Optional<Customer> findById(@PathVariable("cusUsername")String username){
+        return customerService.findById(username);
     }
+
 
     // API để tạo mới một khách hàng
     @PostMapping("/add")

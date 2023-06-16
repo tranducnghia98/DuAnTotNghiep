@@ -11,7 +11,8 @@ import Upload from '~/pages/Upload'
 import Search from '~/pages/Search'
 import Profile from '~/pages/Profile'
 import Live from '~/pages/Live'
-import SingleVehicle from '~/pages/Detail/Detail'
+import SingleVehicle from '~/pages/SingleVehicle/SingleVehicle'
+import HireVehicle from '~/pages/HireVehicle/HireVehicle'
 
 
 
@@ -19,7 +20,7 @@ import SingleVehicle from '~/pages/Detail/Detail'
 const publicRouter = [
     {path: config.routes.home, component: Home},
     {path: config.routes.singleVehicle , component: SingleVehicle},
-    // {path: config.routes.hireVehiclePage , component: HireVehicle},
+    {path: config.routes.hireVehiclePage , component: HireVehicle},
     {path: config.routes.upload, component: Upload, layout:HeaderOnly},
     {path: config.routes.search, component: Search, layout:null}
 ]

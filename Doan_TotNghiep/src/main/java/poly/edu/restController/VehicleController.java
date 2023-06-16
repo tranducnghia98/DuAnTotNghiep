@@ -10,6 +10,7 @@ import poly.edu.responsitory.VehicleResp;
 import poly.edu.service.VehicleSerivce;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -30,6 +31,11 @@ public class VehicleController {
     @GetMapping("/all")
     public List<Vehicle> getAll(){
         return vehicleSerivce.getAll();
+    }
+
+    @GetMapping("/getOne/{vehicleId}")
+    public Optional<Vehicle> getOne(@PathVariable("vehicleId") Integer vehicleId){
+        return vehicleSerivce.findById(vehicleId);
     }
 
     @PostMapping("/add")
