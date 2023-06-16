@@ -21,7 +21,7 @@ function Home() {
             <Carousel></Carousel>
             <div className={cx('container')}>
                 <div className={cx('title-1')}>
-                    <h1>Top Car Hiring</h1>
+                    <h1>Top vehicle Hiring</h1>
                 </div>
                 {/* <div className={cx('btn-1')}>
                 <button className={cx('filter')}>Filter</button>
