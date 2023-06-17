@@ -3,7 +3,7 @@ const routes = {
     home: '/',
     singleVehicle: '/singleVehicle/:vehicleId',
     hireVehiclePage:'/hireVehicle/:vehicleId',
-    profile: '/:nickname',
+    profile: '/profile/:cusUsername',
     upload: '/upload',
     search: '/search',
     live: '/live',

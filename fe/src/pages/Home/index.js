@@ -28,7 +28,6 @@ function Home() {
                 <button className={cx('add')} >Add New</button>
 
             </div> */}
-            <h1>hahaaha</h1>
 
             </div>
             <ListProduct></ListProduct>
