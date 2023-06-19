@@ -38,8 +38,8 @@ public class Customer implements Serializable {
     List<HireVehicle> hireVehicles;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "customer")
-    private Store store;
+    @OneToMany(mappedBy = "customer")
+    List<Store> stores;
 
     @JsonIgnore
     @OneToMany(mappedBy = "customer")
