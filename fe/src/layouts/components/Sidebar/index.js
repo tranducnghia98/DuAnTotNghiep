@@ -14,11 +14,9 @@ function Sidebar() {
         <div className={cx('sidebar-container')}>
         <Menu>
             <MenuItem title="Home" to={config.routes.home} icon={<HomeIcon/>} activeIcon={<HomeActiveIcon/>}/>
-            <MenuItem title="Profile" to={config.routes.following} icon={<UserGroupIcon/>} activeIcon={<UserGroupActiveIcon/>}/>
+            <MenuItem title="Profile" to={config.routes.profile} icon={<UserGroupIcon/>} activeIcon={<UserGroupActiveIcon/>}/>
             <MenuItem title="Product" to={config.routes.live} icon={<LiveIcon/>} activeIcon={<LiveActiveIcon/>}/>
-            <MenuItem title="" to={config.routes.live} icon={<LiveIcon/>} activeIcon={<LiveActiveIcon/>}/>
-            <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon/>} activeIcon={<LiveActiveIcon/>}/>
-            <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon/>} activeIcon={<LiveActiveIcon/>}/>
+           
         </Menu>
         
 

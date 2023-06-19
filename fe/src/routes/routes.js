@@ -19,6 +19,7 @@ import HireVehicle from '~/pages/HireVehicle/HireVehicle'
 //Public router
 const publicRouter = [
     {path: config.routes.home, component: Home},
+    {path: config.routes.profile, component: Profile},
     {path: config.routes.singleVehicle , component: SingleVehicle},
     {path: config.routes.hireVehiclePage , component: HireVehicle},
     {path: config.routes.upload, component: Upload, layout:HeaderOnly},
