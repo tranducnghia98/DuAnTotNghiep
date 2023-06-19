@@ -5,6 +5,7 @@ import axiosClient from "~/scrips/healper/axiosClient";
 import Image from "~/Component/Images";
 import images from "~/assets/images";
 import Button from "~/Component/Button";
+import { Link } from "react-router-dom";
 
 
 
@@ -15,7 +16,8 @@ const cx = classNames.bind(styles)
 
 function Profile() {
   const [customer, setCustomer] = useState({})
-  const [searchParams, setSearchParams] = useState({})
+  const [store, setStore] = useState({})
+
 
   const username = 'leminh';
   useEffect(() => {
@@ -27,7 +29,20 @@ function Profile() {
       .catch(() => {
         console.log('không tìm thấy user')
       });
-  }, [searchParams]);
+  }, []);
+
+  //tìm kiếm store theo username
+  useEffect(() => {
+    axiosClient.get(`http://localhost:8080/store/findByCustomer/${username}`)
+      .then((response) => {
+        const data = response;
+        setStore(data);
+        console.log(data);
+      })
+      .catch(() => {
+        console.log('không tìm thấy user')
+      });
+  }, []);
 
 
   return (
@@ -43,7 +58,15 @@ function Profile() {
       <h2>Phone: <span>{customer.phone}</span></h2>
 
       <div className={cx('profile-action')}>
-        <Button primary to='/changeRole'>Convert to a business account</Button>
+      {store.length === 0 ? 
+      (<Link to={`/changeToStore/${customer.cusUsername}`} >
+        <Button primary >Convert to a business account</Button>
+          
+        </Link>
+        ):(<Link to={`/store/${customer.cusUsername}`} >
+        <Button primary >Go to store</Button>
+          
+        </Link>)}
       </div>
 
     </div>

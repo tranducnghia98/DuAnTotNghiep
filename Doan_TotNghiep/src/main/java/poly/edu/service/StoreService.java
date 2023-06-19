@@ -4,7 +4,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import poly.edu.model.Customer;
 import poly.edu.model.Store;
 
 import java.util.List;
@@ -90,4 +92,6 @@ public interface StoreService {
     <S extends Store, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
 
 
+    @Query("SELECT o FROM Store o WHERE o.customer.cusUsername like ?1")
+    List<Store> findByCusUsername(String username);
 }

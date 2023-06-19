@@ -28,8 +28,8 @@ public class Store implements Serializable {
     @OneToMany(mappedBy = "store")
     List<Vehicle> vehicles;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "CusUsername", referencedColumnName = "cusUsername")
-    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "cusUsername")
+    Customer customer;
 
 }

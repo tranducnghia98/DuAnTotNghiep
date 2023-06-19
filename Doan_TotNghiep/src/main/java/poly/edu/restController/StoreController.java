@@ -5,12 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import poly.edu.model.Customer;
+import poly.edu.model.HireVehicle;
 import poly.edu.model.Store;
+import poly.edu.service.CustomerService;
 import poly.edu.service.StoreService;
 
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 @RequestMapping("/store")
 public class StoreController {
@@ -18,11 +22,18 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
+    @Autowired
+    private CustomerService customerService;
 
-    @PostMapping("/addStore")
-    public ResponseEntity<Store> createStore(@RequestBody Store store) {
-        Store savedStore = storeService.createStore(store);
-        return new ResponseEntity<>(savedStore, HttpStatus.CREATED);
+
+    @PostMapping("/add")
+    public Store create(@RequestBody Store store){
+        return storeService.save(store);
+    }
+
+    @GetMapping("/findByCustomer/{cusUsername}")
+    public List<Store> findStoreByCustomer(@PathVariable("cusUsername")String cusUsername){
+        return storeService.findByCusUsername(cusUsername);
     }
 
     @GetMapping("/getById/{storeId}")
