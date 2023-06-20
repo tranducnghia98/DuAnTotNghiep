@@ -38,21 +38,20 @@ public class VehicleServiceImpl implements VehicleSerivce {
     }
 
 
-
     @Override
-    public Vehicle addVehicle(Vehicle vehicle){
+    public Vehicle addVehicle(Vehicle vehicle) {
         return vehicleResp.save(vehicle);
     }
 
     @Override
-    public List<Vehicle> getAll(){
-        return  vehicleResp.findAll();
+    public List<Vehicle> getAll() {
+        return vehicleResp.findAll();
     }
 
     @Override
-    public Vehicle updateVehicle(Vehicle vehicle){
+    public Vehicle updateVehicle(Vehicle vehicle) {
         Vehicle newVehicle = vehicleResp.findById(vehicle.getVehicleId()).orElse(null);
-        if (newVehicle != null){
+        if (newVehicle != null) {
             newVehicle.setVehicleName(vehicle.getVehicleName());
             newVehicle.setHireVehicles(vehicle.getHireVehicles());
             newVehicle.setBrand(vehicle.getBrand());
@@ -63,26 +62,26 @@ public class VehicleServiceImpl implements VehicleSerivce {
 
             vehicleResp.save(newVehicle);
         }
-       return newVehicle;
+        return newVehicle;
     }
 
     @Override
-    public void delete(Integer vehicleId){
+    public void delete(Integer vehicleId) {
         vehicleResp.deleteById(vehicleId);
     }
 
     @Override
-    public Vehicle getVehicleById(Integer vehicleId){
-            return vehicleResp.findById(vehicleId).orElse(null);
+    public Vehicle getVehicleById(Integer vehicleId) {
+        return vehicleResp.findById(vehicleId).orElse(null);
     }
 
     @Override
-    public List<Vehicle> searchVehicleByKey(String key){
+    public List<Vehicle> searchVehicleByKey(String key) {
         List<Vehicle> allVehicle = vehicleResp.findAll();
 
         List<Vehicle> searchResults = new ArrayList<>();
 
-        for (Vehicle vehicle:allVehicle
+        for (Vehicle vehicle : allVehicle
         ) {
             if (vehicle.getVehicleName().toLowerCase().contains(key.toLowerCase())) {
                 searchResults.add(vehicle);
@@ -262,6 +261,12 @@ public class VehicleServiceImpl implements VehicleSerivce {
     @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
     public List<Vehicle> findByStore(Integer storeId) {
         return vehicleResp.findByStore(storeId);
+    }
+
+    @Override
+    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
+    public List<Vehicle> findVehiclesBybrandId(Integer brandId) {
+        return vehicleResp.findVehiclesBybrandId(brandId);
     }
 
 }

@@ -45,28 +45,9 @@ public class VehicleController {
         return vehicleSerivce.findById(vehicleId);
     }
 
-    @GetMapping("/vehicleWithBrand/{vehicleId}")
-    public ResponseEntity<Object> getVehicleWithBrand(@PathVariable Integer vehicleId) {
-        Vehicle vehicle = vehicleSerivce.getVehicleById(vehicleId);
-
-        if (vehicle == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Brand brand = brandService.getBrandById(vehicle.getBrand().getBrandId());
-
-        if (brand == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        List<Vehicle> relatedVehicles = brandService.getVehiclesByBrand(brand);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("vehicle", vehicle);
-        response.put("brand", brand);
-        response.put("relatedVehicles", relatedVehicles);
-
-        return ResponseEntity.ok(response);
+    @GetMapping("/findVehicleWithBrand/{brandId}")
+    public List<Vehicle> getVehicleWithBrand(@PathVariable Integer brandId) {
+       return vehicleSerivce.findVehiclesBybrandId(brandId);
     }
 
     @PostMapping("/add")
@@ -78,7 +59,10 @@ public class VehicleController {
     public  ResponseEntity<Vehicle>update(@PathVariable("vehicleId") Integer vehicleId, @RequestBody Vehicle vehicle){
         return  new ResponseEntity<Vehicle>(vehicleSerivce.updateVehicle(vehicle),HttpStatus.OK);
     }
-
+    @GetMapping("/findBrandIdByVehicleId/{vehicleId}")
+    public String getBrandId(@PathVariable("vehicleId") Integer vehicleId){
+        return brandService.findBrandIdByVehicleId(vehicleId);
+    }
     @GetMapping("/findByStore/{storeId}")
     public List<Vehicle> getVehicleByStore(@PathVariable("storeId") Integer storeId){
         return vehicleSerivce.findByStore(storeId);

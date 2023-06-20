@@ -5,10 +5,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import poly.edu.model.Brand;
-import poly.edu.model.Vehicle;
 import poly.edu.responsitory.BrandReps;
 import poly.edu.service.BrandService;
 
@@ -27,10 +27,7 @@ public class BrandServiceImpl implements BrandService {
         return brandRepository.findById(brandId).orElse(null);
     }
 
-    @Override
-    public List<Vehicle> getVehiclesByBrand(Brand brand) {
-        return brand.getVehicles();
-    }
+
 
     @Override
     public List<Brand> findByNameBrandContaining(String key) {
@@ -194,4 +191,12 @@ public class BrandServiceImpl implements BrandService {
     public <S extends Brand, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return brandRepository.findBy(example, queryFunction);
     }
+
+    @Override
+    @Query("SELECT o.brand.brandId FROM Vehicle o WHERE o.vehicleId = ?1")
+    public String findBrandIdByVehicleId(Integer vehicleId) {
+        return brandRepository.findBrandIdByVehicleId(vehicleId);
+
+    }
+
 }

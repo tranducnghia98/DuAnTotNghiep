@@ -104,4 +104,7 @@ public interface  VehicleSerivce {
 
     @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
     List<Vehicle> findByStore(Integer storeId);
+
+    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
+    List<Vehicle> findVehiclesBybrandId(Integer brandId);
 }

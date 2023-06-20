@@ -4,6 +4,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import poly.edu.model.Brand;
 import poly.edu.model.Vehicle;
@@ -17,7 +18,7 @@ public interface BrandService {
 
     Brand getBrandById(Integer brandId);
 
-    List<Vehicle> getVehiclesByBrand(Brand brand);
+
 
     List<Brand> findByNameBrandContaining(String key);
 
@@ -85,4 +86,7 @@ public interface BrandService {
     <S extends Brand> boolean exists(Example<S> example);
 
     <S extends Brand, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
+
+    @Query("SELECT o.brand.brandId FROM Vehicle o WHERE o.vehicleId = ?1")
+    String findBrandIdByVehicleId(Integer vehicleId);
 }

@@ -16,7 +16,7 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-<<<<<<< HEAD
+
     @GetMapping("getAll")
     public List<Brand> getAll(){
         return brandService.findAll();
@@ -26,8 +26,7 @@ public class BrandController {
     public Optional<Brand> findById(@PathVariable("brandId")Integer brandId){
         return brandService.findById(brandId);
     }
-=======
->>>>>>> 94a3f1611b802d21aaa4e9398eba2a8541ca9ab5
+
 
 }
 

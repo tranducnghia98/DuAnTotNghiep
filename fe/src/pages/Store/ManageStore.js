@@ -31,8 +31,10 @@ function ManagerStore() {
     return (
         <div className={cx('Manager-store')}>
             <Button primary small to={`/addVehicle/${storeId}`}>Add new Vehicle</Button>
+            <div className={cx('listProduct-store')}>
             {vehicles.map((vehicle, index) => {
                 return (
+                    
                     <ProductItem
                         key={index}
                         edit
@@ -45,8 +47,10 @@ function ManagerStore() {
                         store = {vehicle.store}
                         brand = {vehicle.brand}
                     />
+                   
                 )
             })}
+            </div>
         </div>
     );
 }

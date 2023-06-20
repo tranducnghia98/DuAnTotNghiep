@@ -9,6 +9,9 @@ import {
   faKeyboard,
   faSignOut,
   faUser,
+  faBellSlash,
+  faBell,
+  faBellConcierge
 } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
 import { Link } from "react-router-dom";
@@ -20,9 +23,10 @@ import images from "~/assets/images";
 import config from "~/config";
 import Button from "~/Component/Button";
 import Menu from "~/Component/Poper/Menu";
-import { MessageIcon, UploadIcon } from "~/Component/Icons";
+import { BellIcon, MessageIcon, UploadIcon,changeBackgroundimage } from "~/Component/Icons";
 import Image from "~/Component/Images";
 import Search from "../Search";
+import { FaBell } from "react-icons/fa";
 
 const cx = classNames.bind(styles);
 
@@ -92,8 +96,10 @@ function Header() {
     <header className={cx("wrapper")}>
       <div className={cx("inner")}>
         <Link to={config.routes.home} className={cx("logo-link")}>
-          <img src={images.logo} alt="TikTok"></img>
+          <img src={images.logo1} alt="TikTok" className={cx('logo-img')}></img>
+          <h3 className={cx('title-logo')}>Take you everywhere</h3>
         </Link>
+        
 
         <Search />
 
@@ -103,7 +109,8 @@ function Header() {
               <Tippy delay={[0, 200]} content="Message" placement="bottom">
                 <button className={cx("action-btn")}>
                   {/* <UploadIcon /> */}
-                  <MessageIcon></MessageIcon>
+
+                  <BellIcon></BellIcon>
 
                 </button>
               </Tippy>
@@ -121,7 +128,7 @@ function Header() {
           >
             {currentUser ? (
               <Image
-                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/19f06192d956fb58401792859ec16413~c5_100x100.jpeg?x-expires=1682946000&amp;x-signature=48RRoJCIgCLZr4OTt8J%2FirskST8%3D"
+                src="https://files.fullstack.edu.vn/f8-prod/user_photos/199187/627002074c706.jpg"
                 className={cx("user-avatar")}
                 alt="Le Van Minh"
               ></Image>

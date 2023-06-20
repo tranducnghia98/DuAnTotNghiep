@@ -27,10 +27,11 @@ public interface VehicleResp extends JpaRepository<Vehicle,Integer> {
     @Query(value = "Select v from Vehicle v where v.store.address like  ?1")
     public  List<Vehicle> searchByAddress(String  key);
 
-<<<<<<< HEAD
+
     @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
     List<Vehicle> findByStore(Integer storeId);
-=======
 
->>>>>>> 94a3f1611b802d21aaa4e9398eba2a8541ca9ab5
+    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
+    List<Vehicle> findVehiclesBybrandId(Integer brandId);
+
 }

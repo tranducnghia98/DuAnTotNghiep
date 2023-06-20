@@ -21,7 +21,7 @@ import AddVehicle from '~/pages/Store/Vehicle/AddVehicle'
 //Public router
 const publicRouter = [
     {path: config.routes.home, component: Home},
-    {path: config.routes.profile, component: Profile},
+    {path: config.routes.profile, component: Profile,layout: HeaderOnly},
     {path: config.routes.singleVehicle , component: SingleVehicle},
     {path: config.routes.hireVehiclePage , component: HireVehicle},
     {path: config.routes.changeToStore , component: ChangeToStore},

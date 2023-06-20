@@ -13,7 +13,7 @@ const cx = classNames.bind(styles)
 function SingleVehicle() {
     const { vehicleId } = useParams();
 
-    const [products, setProducts] = useState({})
+    const [vehicle, setVehicle] = useState({})
     const [searchParams, setSearchParams] = useState([])
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function SingleVehicle() {
             .then((response) => {
                 const data = response;
                 console.log("thue xe");
-                setProducts(data);
+                setVehicle(data);
             })
             .catch(() => {
                 console.log("looi");
@@ -54,12 +54,12 @@ function SingleVehicle() {
                     </div>
                     <div className={cx('description')}>
 
-                        <h2>Name: {products.vehicleName}</h2>
+                        <h2>Name: {vehicle.vehicleName}</h2>
 
-                        <h3>Price: {products.rentByDay}</h3>
+                        <h3>Price: {vehicle.rentByDay}</h3>
                        
-                        <p>Decripstion: {products.description}</p>
-                        <Link to={`/hireVehicle/${products.vehicleId}`}>
+                        <p>Decripstion: {vehicle.description}</p>
+                        <Link to={`/hireVehicle/${vehicle.vehicleId}`}>
                             <button>Thuê Xe</button>
                         </Link>
 
@@ -68,6 +68,8 @@ function SingleVehicle() {
                     
                 </div>
             </div>
+
+            <VehicleWithBrand vehicle = {vehicle}></VehicleWithBrand>
         </div >
     )
 }
