@@ -98,4 +98,7 @@ public interface  VehicleSerivce {
     <S extends Vehicle> boolean exists(Example<S> example);
 
     <S extends Vehicle, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
+
+    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
+    List<Vehicle> findByStore(Integer storeId);
 }

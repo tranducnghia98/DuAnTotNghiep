@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import poly.edu.model.Brand;
 import poly.edu.model.HireVehicle;
+import poly.edu.model.Store;
 import poly.edu.model.Vehicle;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface VehicleResp extends JpaRepository<Vehicle,Integer> {
 
     @Query(value = "Select v from Vehicle v where v.store.address like  ?1")
     public  List<Vehicle> searchByAddress(String  key);
+
+    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
+    List<Vehicle> findByStore(Integer storeId);
 }

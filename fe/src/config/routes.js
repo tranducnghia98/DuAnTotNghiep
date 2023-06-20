@@ -5,7 +5,9 @@ const routes = {
     hireVehiclePage:'/hireVehicle/:vehicleId',
     profile: '/profile/:cusUsername',
     changeToStore: '/changeToStore/:cusUsername',
-    store: '/store/:storeId',
+    store: '/store/:cusUsername',
+    ManagerStore: '/managerStore/:storeId',
+    addVehicle: '/addVehicle/:storeId',
     search: '/search',
     live: '/live',
 

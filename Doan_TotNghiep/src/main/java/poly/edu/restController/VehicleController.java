@@ -39,12 +39,18 @@ public class VehicleController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle){
-        return  new ResponseEntity<Vehicle>(vehicleSerivce.addVehicle(vehicle), HttpStatus.OK);
+   public Vehicle add(@RequestBody Vehicle vehicle){
+        return vehicleSerivce.saveAndFlush(vehicle);
     }
 
     @PutMapping("update/{vehicleId}")
     public  ResponseEntity<Vehicle>update(@PathVariable("vehicleId") Integer vehicleId, @RequestBody Vehicle vehicle){
         return  new ResponseEntity<Vehicle>(vehicleSerivce.updateVehicle(vehicle),HttpStatus.OK);
     }
+
+    @GetMapping("/findByStore/{storeId}")
+    public List<Vehicle> getVehicleByStore(@PathVariable("storeId") Integer storeId){
+        return vehicleSerivce.findByStore(storeId);
+    }
+
 }

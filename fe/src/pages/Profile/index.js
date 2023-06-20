@@ -5,7 +5,7 @@ import axiosClient from "~/scrips/healper/axiosClient";
 import Image from "~/Component/Images";
 import images from "~/assets/images";
 import Button from "~/Component/Button";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 
 
 

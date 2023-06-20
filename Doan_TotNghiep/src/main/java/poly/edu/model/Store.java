@@ -21,6 +21,7 @@ public class Store implements Serializable {
     private Integer storeId;
     private String nameStore;
     private String address;
+    private String image;
     private Long cartStore;
     private String phone;
 

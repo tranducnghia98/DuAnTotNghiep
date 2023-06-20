@@ -256,4 +256,10 @@ public class VehicleServiceImpl implements VehicleSerivce {
         return vehicleResp.findBy(example, queryFunction);
     }
 
+    @Override
+    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
+    public List<Vehicle> findByStore(Integer storeId) {
+        return vehicleResp.findByStore(storeId);
+    }
+
 }
