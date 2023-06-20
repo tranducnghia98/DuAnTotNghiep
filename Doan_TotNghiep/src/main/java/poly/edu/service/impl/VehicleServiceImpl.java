@@ -37,6 +37,8 @@ public class VehicleServiceImpl implements VehicleSerivce {
         return vehicleResp.searchByAddress(key);
     }
 
+
+
     @Override
     public Vehicle addVehicle(Vehicle vehicle){
         return vehicleResp.save(vehicle);
