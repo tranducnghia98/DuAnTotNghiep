@@ -18,6 +18,9 @@ public interface  VehicleSerivce {
     @Query("Select v  from vehicles v inner join stores on v.store_id = stores.store_id where stores.address like ?1")
     List<Vehicle> searchByAddress(String key);
 
+
+
+
     Vehicle addVehicle(Vehicle vehicle);
 
     List<Vehicle> getAll();

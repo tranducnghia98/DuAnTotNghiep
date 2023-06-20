@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import poly.edu.model.Brand;
+import poly.edu.model.Vehicle;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,10 @@ import java.util.function.Function;
 
 public interface BrandService {
 
+
+    Brand getBrandById(Integer brandId);
+
+    List<Vehicle> getVehiclesByBrand(Brand brand);
 
     List<Brand> findByNameBrandContaining(String key);
 

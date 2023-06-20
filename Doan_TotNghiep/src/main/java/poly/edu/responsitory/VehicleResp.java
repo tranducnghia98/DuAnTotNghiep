@@ -25,4 +25,6 @@ public interface VehicleResp extends JpaRepository<Vehicle,Integer> {
 
     @Query(value = "Select v from Vehicle v where v.store.address like  ?1")
     public  List<Vehicle> searchByAddress(String  key);
+
+
 }

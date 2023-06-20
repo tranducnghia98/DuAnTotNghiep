@@ -17,22 +17,17 @@ const cx = classNames.bind(styles)
 function Home() {
     return (
 
-        <div>
+        <div className={cx('wrapper')}>
             <Carousel></Carousel>
             <div className={cx('container')}>
                 <div className={cx('title-1')}>
-                    <h1>Top vehicle Hiring</h1>
+                    <span>Top vehicle Hiring</span> <span className={cx('top')}>Top</span>
                 </div>
-                {/* <div className={cx('btn-1')}>
-                <button className={cx('filter')}>Filter</button>
-                <button className={cx('add')} >Add New</button>
-
-            </div> */}
-
+ 
             </div>
             <ListProduct></ListProduct>
-          
-        </div>
+
+        </div >
 
 
 

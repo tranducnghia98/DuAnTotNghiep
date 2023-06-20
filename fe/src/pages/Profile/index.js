@@ -6,8 +6,8 @@ import Image from "~/Component/Images";
 import images from "~/assets/images";
 import Button from "~/Component/Button";
 import { Link } from "react-router-dom";
-
-
+import { FaEnvelope, FaPhoneAlt, FaTransgender, FaUser, FaUserTie } from 'react-icons/fa';
+import { FaBeer } from 'react-icons/fa';
 
 const cx = classNames.bind(styles)
 
@@ -19,7 +19,7 @@ function Profile() {
   const [store, setStore] = useState({})
 
 
-  const username = 'leminh';
+  const username = 'testcus';
   useEffect(() => {
     axiosClient.get(`http://localhost:8080/customers/findById/${username}`)
       .then((response) => {
@@ -48,27 +48,33 @@ function Profile() {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('profile-content')}>
-        <Image className={cx("profile-img")} src={customer.image ? (customer.image) : (images.image1)}></Image>
-      </div>
-      <h2>Username: <span>{customer.cusUsername}</span></h2>
-      <h2>Fullname: <span>{customer.fullname}</span></h2>
-      <h2>Email: <span>{customer.email}</span></h2>
-      <h2>gender: </h2> <input type="radio" name="gender" value="male" checked={customer.gender===true}/>Male
-      <input type="radio" name="gender" value="female" defaultChecked={customer.gender===false}/>Female
-      <h2>Phone: <span>{customer.phone}</span></h2>
+        {/* <Image className={cx("profile-img")} src={customer.image ? (customer.image) : (images.image1)}></Image> */}
 
-      <div className={cx('profile-action')}>
-      {store.length === 0 ? 
-      (<Link to={`/changeToStore/${customer.cusUsername}`} >
-        <Button primary >Convert to a business account</Button>
-          
-        </Link>
-        ):(<Link to={`/store/${customer.cusUsername}`} >
-        <Button primary >Go to store</Button>
-          
-        </Link>)}
-      </div>
+        <div className={cx("profile-img")}>
+          <Image  src={images.image1}></Image>
 
+        </div>
+
+        <hr className="divider" />
+        <h2> <FaUser />Username : <span>{customer.cusUsername}</span></h2>
+        <h2> <FaUserTie />  Fullname: <span>{customer.fullname}</span></h2>
+        <h2><FaEnvelope /> Gmail: <span>{customer.email}</span></h2>
+        <h2> <FaTransgender /> Gender:  <input type="radio" name="gender" value="male" checked={customer.gender === true} />Male
+          <input type="radio" name="gender" value="female" defaultChecked={customer.gender === false} />Female
+        </h2>
+        <h2> <FaPhoneAlt /> Phone: <span>{customer.phone}</span></h2>
+
+        <div className={cx('profile-action')}>
+          {store.length === 0 ?
+            (<Link to={`/changeToStore/${customer.cusUsername}`} >
+              <Button primary >Convert to a business account</Button>
+
+            </Link>
+            ) : (<Link to={`/store/${customer.cusUsername}`} >
+              <button className={cx('button-19')} role="button">GO TO SHOP</button>
+            </Link>)}
+        </div>
+      </div>
     </div>
   )
 }

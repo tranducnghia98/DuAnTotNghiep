@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import poly.edu.model.Brand;
+import poly.edu.model.Vehicle;
 import poly.edu.responsitory.BrandReps;
 import poly.edu.service.BrandService;
 
@@ -20,6 +21,16 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private BrandReps brandRepository;
 
+
+    @Override
+    public Brand getBrandById(Integer brandId) {
+        return brandRepository.findById(brandId).orElse(null);
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByBrand(Brand brand) {
+        return brand.getVehicles();
+    }
 
     @Override
     public List<Brand> findByNameBrandContaining(String key) {
