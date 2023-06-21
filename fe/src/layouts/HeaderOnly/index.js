@@ -16,7 +16,7 @@ function HeaderOnly({children}) {
               
             </div>
            
-            <Footer></Footer>
+            {/* <Footer></Footer> */}
         </div>
      );
 }

@@ -68,4 +68,10 @@ public class VehicleController {
         return vehicleSerivce.findByStore(storeId);
     }
 
+    @GetMapping("/findVehicleByCustomerWasHire/{cusUsername}")
+    public List<Vehicle> getVehiclesByUsernameWasHire(@PathVariable("cusUsername") String username){
+        return vehicleSerivce.findByUsernameWasHire(username);
+    }
+
+
 }

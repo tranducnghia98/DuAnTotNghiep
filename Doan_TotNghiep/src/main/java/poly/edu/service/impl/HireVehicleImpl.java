@@ -5,6 +5,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import poly.edu.model.HireVehicle;
@@ -177,4 +178,13 @@ public class HireVehicleImpl implements HireVehicleService {
     public <S extends HireVehicle, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return hireVehicleReps.findBy(example, queryFunction);
     }
+
+    @Override
+    @Query("SELECT o FROM HireVehicle o WHERE o.customer.cusUsername like ?1")
+    public List<HireVehicle> findHireVehicleBycusUsername(String username) {
+        return hireVehicleReps.findHireVehicleBycusUsername(username);
+    }
+
+
+
 }

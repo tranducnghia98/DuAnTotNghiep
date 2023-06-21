@@ -269,4 +269,10 @@ public class VehicleServiceImpl implements VehicleSerivce {
         return vehicleResp.findVehiclesBybrandId(brandId);
     }
 
+    @Override
+    @Query(value = "select v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id from vehicles v inner join hire_vehicles h on v.vehicle_id = h.vehicle_id where h.cus_username like ?1 group by v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id", nativeQuery = true)
+    public List<Vehicle> findByUsernameWasHire(String username) {
+        return vehicleResp.findByUsernameWasHire(username);
+    }
+
 }

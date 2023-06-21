@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import poly.edu.model.HireVehicle;
 import poly.edu.service.HireVehicleService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("hireVehicle")
@@ -15,6 +17,11 @@ public class HireRestController {
     @PostMapping("/add")
     public HireVehicle create(@RequestBody HireVehicle hireVehicle){
         return hireVehicleService.saveAndFlush(hireVehicle);
+    }
+
+    @GetMapping("findHireByCusUsername/{cusUsername}")
+    public List<HireVehicle> findHireByCusUsername(@PathVariable("cusUsername") String username){
+        return hireVehicleService.findHireVehicleBycusUsername(username);
     }
 
 }
