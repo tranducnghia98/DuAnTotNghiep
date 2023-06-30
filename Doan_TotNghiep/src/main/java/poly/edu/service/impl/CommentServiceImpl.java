@@ -5,6 +5,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import poly.edu.model.Comment;
@@ -176,5 +177,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public <S extends Comment, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return commentReps.findBy(example, queryFunction);
+    }
+
+    @Override
+    @Query("select c from Comment c inner  join HireVehicle h on c.hireVehicle.hireId = h.hireId where h.vehicle.vehicleId = ?1")
+    public List<Comment> findCommentByVehicleId(Integer VehicleId) {
+        return commentReps.findCommentByVehicleId(VehicleId);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
+import poly.edu.dto.HireDto;
 import poly.edu.model.HireVehicle;
 import poly.edu.responsitory.HireVehicleReps;
 import poly.edu.service.HireVehicleService;
@@ -185,6 +186,13 @@ public class HireVehicleImpl implements HireVehicleService {
         return hireVehicleReps.findHireVehicleBycusUsername(username);
     }
 
-
-
+    @Override
+    @Query("select new poly.edu.dto.HireDto(h.hireId,h.status,h.TotalMoney,h.hireDate,h.returnDate,h.vehicle." +
+            "vehicleId,h.vehicle.vehicleName,h.vehicle.rentByDay,h.vehicle.image,h.vehicle.address,v.store) from HireVehicle h inner join Vehicle v " +
+            "on h.vehicle.vehicleId=v.vehicleId where h.customer.cusUsername like ?1 and h.status=?2" +
+            " group by h.hireId,h.status,h.TotalMoney,h.hireDate,h.returnDate,h.vehicle.vehicleId," +
+            "h.vehicle.vehicleName,h.vehicle.rentByDay,h.vehicle.image,h.vehicle.address,v.store")
+    public List<HireDto> findHistoryHireByCusUsername(String cusUsername, Boolean status) {
+        return hireVehicleReps.findHistoryHireByCusUsername(cusUsername, status);
+    }
 }

@@ -3,20 +3,24 @@
     flex-direction: column;
     min-height: 100vh;
     // align-items: center;
+    width: 100%;
     
 }
 .container {
-    width: var(--default-layout-width);
-    max-width: 100%;
+    // width: var(--default-layout-width);
+    width: 100%;
     // padding-top: 0 var(--default-layout-horizontal-spacer);
     display: flex;
     flex: 1;
+    margin: auto;
+    
 
 }
 .content {
     flex: 1;
     float: left;
     padding-top: 4rem;
+    width: 100%;
 }
 Footer{
     position: sticky;

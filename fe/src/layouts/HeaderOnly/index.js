@@ -8,15 +8,16 @@ const cx = classNames.bind(styles)
 function HeaderOnly({children}) {
     return ( 
         <div className={cx('wrapper')}>
-            <Header></Header>
+            <Header searchHiden={true}></Header>
             <div className={cx('container')}>
+                {/* <SidebarStore store/> */}
                 <div className={cx('content')}>
                     {children}
                 </div>
               
             </div>
            
-            {/* <Footer></Footer> */}
+            <Footer></Footer>
         </div>
      );
 }

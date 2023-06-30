@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import poly.edu.dto.StoreDto;
 import poly.edu.model.Customer;
 import poly.edu.model.HireVehicle;
 import poly.edu.model.Store;
@@ -36,6 +37,11 @@ public class StoreController {
         return storeService.findByCusUsername(cusUsername);
     }
 
+    @GetMapping("/findStoresAndSLVehicleByCusUsername/{cusUsername}")
+    public List<StoreDto> findStoresByCusUsername(@PathVariable("cusUsername")String cusUsername){
+        return storeService.findStoreAndSLVehicleByCustomer(cusUsername);
+    }
+
     @GetMapping("/getById/{storeId}")
     public ResponseEntity<Store> getStoreById(@PathVariable Integer storeId) {
         Store store = storeService.getStoreById(storeId);
@@ -53,13 +59,18 @@ public class StoreController {
     }
 
     @PutMapping("/update/{storeId}")
-    public Store updateStore(@PathVariable Integer storeId, @RequestBody Store updateStore) {
-        return storeService.updateStore(storeId,updateStore);
+    public Store update(@PathVariable("storeId") Integer storeId,@RequestBody Store store){
+        return storeService.saveAndFlush(store);
     }
 
     @DeleteMapping("/delete/{storeId}")
     public ResponseEntity<Void> deleteStore(@PathVariable Integer storeId) {
         storeService.deleteStore(storeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/findStoreByVehicleId/{vehicleId}")
+    public Store findStoreByVehicleId(@PathVariable("vehicleId") Integer vehicleId) {
+        return storeService.findStoreByVehicleId(vehicleId);
     }
 }

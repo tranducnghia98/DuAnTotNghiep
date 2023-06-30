@@ -21,6 +21,8 @@ public class HireVehicle implements Serializable {
     @Column(name = "hireid")
     private Integer hireId;
     private Boolean status;
+    private Double TotalMoney;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "HireDate")
     Date hireDate = new Date();
@@ -38,5 +40,6 @@ public class HireVehicle implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "hireVehicle")
     List<Comment> comments;
+
 
  }

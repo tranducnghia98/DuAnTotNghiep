@@ -11,7 +11,9 @@ import {
   faUser,
   faBellSlash,
   faBell,
-  faBellConcierge
+  faBellConcierge,
+  faRectangleTimes,
+  faRectangleList
 } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
 import { Link } from "react-router-dom";
@@ -59,8 +61,9 @@ const MENU_ITEMS = [
   },
 ];
 
-function Header() {
+function Header({searchHiden}) {
   const currentUser = true;
+  const cusUsername = 'leminh'
 
   //handle logic
   const handleMenuChange = (menuItem) => {
@@ -70,20 +73,20 @@ function Header() {
   const userMenu = [
     {
       icon: <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>,
-      title: "View profile",
+      title: "Trang cá nhân",
       to: "/profile/:cusUsername",
     },
     {
-      icon: <FontAwesomeIcon icon={faCoins}></FontAwesomeIcon>,
-      title: "get coins",
-      to: "/coin",
+      icon: <FontAwesomeIcon icon={faRectangleList}></FontAwesomeIcon>,
+      title: "Lịch sử thuê xe",
+      to: `/history/${cusUsername}`,
     },
     {
       icon: <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>,
       title: "Settings",
       to: "/settings",
     },
-    ...MENU_ITEMS,
+    // ...MENU_ITEMS,
     {
       icon: <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>,
       title: "Log out",
@@ -91,17 +94,19 @@ function Header() {
       separate: true,
     },
   ];
+  const username = 'leminh';
 
   return (
-    <header className={cx("wrapper")}>
+    (
+      <header className={cx("wrapper")}>
       <div className={cx("inner")}>
         <Link to={config.routes.home} className={cx("logo-link")}>
-          <img src={images.logo1} alt="TikTok" className={cx('logo-img')}></img>
+          <img src={images.logo1} alt="MIKKAA" className={cx('logo-img')}></img>
           <h3 className={cx('title-logo')}>Take you everywhere</h3>
         </Link>
         
 
-        <Search />
+        {searchHiden?(null):(<Search />)}
 
         <div className={cx("action")}>
           {currentUser ? (
@@ -141,6 +146,8 @@ function Header() {
         </div>
       </div>
     </header>
+    )
+    
   );
 }
 

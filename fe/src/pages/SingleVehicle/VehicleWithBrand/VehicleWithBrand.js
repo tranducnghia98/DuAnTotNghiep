@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axiosClient from "~/scrips/healper/axiosClient";
 import Image from "~/Component/Images";
 import images from "~/assets/images";
-import ProductItem from "~/pages/Home/ListProduct/ProductItem";
+import ProductItem from "~/Component/ProductItem/ProductItem";
 
 const cx = classNames.bind(styles)
 
@@ -55,14 +55,7 @@ function VehicleWithBrand() {
                 return (
                     <ProductItem
                         key={index}
-                        vehicleId = {vehicle.vehicleId}
-                        renByDay={vehicle.renByDay}
-                        vehicleName ={vehicle.vehicleName}
-                        image= {vehicle.image}
-                        statusHiring={vehicle.statusHiring}
-                        description={vehicle.description}
-                        store={vehicle.store}
-                        brand={vehicle.brand}
+                        vehicle={vehicle}
                     />
                 )
             })}

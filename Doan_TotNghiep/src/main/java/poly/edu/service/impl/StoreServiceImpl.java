@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
+import poly.edu.dto.StoreDto;
 import poly.edu.model.Store;
 import poly.edu.responsitory.StoreReps;
 import poly.edu.service.StoreService;
@@ -222,5 +223,18 @@ public class StoreServiceImpl implements StoreService {
     @Query("SELECT o FROM Store o WHERE o.customer.cusUsername like ?1")
     public List<Store> findByCusUsername(String username) {
         return storeReps.findByCusUsername(username);
+    }
+
+    @Override
+    @Query("SELECT new poly.edu.dto.StoreDto(s.storeId,s.nameStore,s.address,s.image,s.cartStore,s.phone,s.customer,count(v.store.storeId)) " +
+            "from Store s inner join Vehicle v on s.storeId=v.store.storeId where s.customer.cusUsername like ?1 group by s.storeId,s.nameStore,s.address,s.image,s.cartStore,s.phone,s.customer")
+    public List<StoreDto> findStoreAndSLVehicleByCustomer(String username) {
+        return storeReps.findStoreAndSLVehicleByCustomer(username);
+    }
+
+    @Override
+    @Query("select v.store from Vehicle v where v.vehicleId = ?1")
+    public Store findStoreByVehicleId(Integer vehicleId) {
+        return storeReps.findStoreByVehicleId(vehicleId);
     }
 }

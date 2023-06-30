@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -19,11 +20,17 @@ public class Store implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer storeId;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String nameStore;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String address;
     private String image;
     private Long cartStore;
     private String phone;
+    private String identityCard;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CreateDate")
+    Date createDate = new Date();
 
     @JsonIgnore
     @OneToMany(mappedBy = "store")

@@ -18,11 +18,17 @@ public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer vehicleId;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String vehicleName;
     private Double rentByDay;
     private String image;
+    private String image2;
+    private String image3;
     private Boolean statusHiring; //trạng thái đã được thuê hay chưa
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String description;
+    @Column(columnDefinition = "nvarchar(100) not null")
+    private String address;
     @ManyToOne
     @JoinColumn(name = "StoreId")
     Store store;

@@ -8,16 +8,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
+import poly.edu.dto.VehicleDto;
 import poly.edu.model.Vehicle;
 import poly.edu.responsitory.VehicleResp;
 import poly.edu.service.VehicleSerivce;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class VehicleServiceImpl implements VehicleSerivce {
@@ -25,6 +23,13 @@ public class VehicleServiceImpl implements VehicleSerivce {
     @Autowired
     private VehicleResp vehicleResp;
 
+    @Override
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))   " +
+            "from Vehicle v inner join HireVehicle h on v.vehicleId=h.vehicle.vehicleId group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    public List<VehicleDto> findTop8() {
+        return vehicleResp.findTop8();
+    }
 
     @Override
     public List<Vehicle> findByVehicleNameContaining(String key) {
@@ -32,71 +37,56 @@ public class VehicleServiceImpl implements VehicleSerivce {
     }
 
     @Override
-    @Query("Select v  from vehicles v inner join stores on v.store_id = stores.store_id where stores.address like ?1")
+    @Query("Select v from Vehicle v where v.store.address like  ?1")
     public List<Vehicle> searchByAddress(String key) {
         return vehicleResp.searchByAddress(key);
     }
 
-
     @Override
-    public Vehicle addVehicle(Vehicle vehicle) {
-        return vehicleResp.save(vehicle);
+    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
+    public List<Vehicle> findByStore(Integer storeId) {
+        return vehicleResp.findByStore(storeId);
     }
 
     @Override
-    public List<Vehicle> getAll() {
-        return vehicleResp.findAll();
+    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
+    public List<Vehicle> findVehiclesBybrandId(Integer brandId) {
+        return vehicleResp.findVehiclesBybrandId(brandId);
     }
 
     @Override
-    public Vehicle updateVehicle(Vehicle vehicle) {
-        Vehicle newVehicle = vehicleResp.findById(vehicle.getVehicleId()).orElse(null);
-        if (newVehicle != null) {
-            newVehicle.setVehicleName(vehicle.getVehicleName());
-            newVehicle.setHireVehicles(vehicle.getHireVehicles());
-            newVehicle.setBrand(vehicle.getBrand());
-            newVehicle.setImage(vehicle.getImage());
-            newVehicle.setStore(vehicle.getStore());
-            newVehicle.setDescription(vehicle.getDescription());
-            newVehicle.setStatusHiring(vehicle.getStatusHiring());
-
-            vehicleResp.save(newVehicle);
-        }
-        return newVehicle;
+    public List<Vehicle> findByAddressContaining(String address) {
+        return vehicleResp.findByAddressContaining(address);
     }
 
     @Override
-    public void delete(Integer vehicleId) {
-        vehicleResp.deleteById(vehicleId);
+    @Query("select v from Vehicle v where v.address like ?1 and v.rentByDay between ?2 and ?3")
+    public List<Vehicle> findByAddressAndPrice(String address, Double minPrice, Double maxPrice) {
+        return vehicleResp.findByAddressAndPrice(address, minPrice, maxPrice);
     }
 
     @Override
-    public Vehicle getVehicleById(Integer vehicleId) {
-        return vehicleResp.findById(vehicleId).orElse(null);
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))" +
+            "from Vehicle v inner join HireVehicle h on v.vehicleId=h.vehicle.vehicleId  where v.vehicleId = ?1 group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    public VehicleDto findVehicleDtoById(Integer vehicleId) {
+        return vehicleResp.findVehicleDtoById(vehicleId);
     }
 
     @Override
-    public List<Vehicle> searchVehicleByKey(String key) {
-        List<Vehicle> allVehicle = vehicleResp.findAll();
-
-        List<Vehicle> searchResults = new ArrayList<>();
-
-        for (Vehicle vehicle : allVehicle
-        ) {
-            if (vehicle.getVehicleName().toLowerCase().contains(key.toLowerCase())) {
-                searchResults.add(vehicle);
-            }
-
-        }
-        searchResults.sort(Comparator.comparing(Vehicle::getVehicleName));
-        return searchResults.stream().limit(5).collect(Collectors.toList());
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))   " +
+            "from Vehicle v inner join HireVehicle h    on v.vehicleId=h.vehicle.vehicleId where h.customer.cusUsername = ?1 group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    public List<VehicleDto> findVehicleByCustomerWasHire(String cusUsername) {
+        return vehicleResp.findVehicleByCustomerWasHire(cusUsername);
     }
 
     @Override
-    @Query(value = "select top 10 v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id,count(h.vehicle_id) as 'SL'  from vehicles v inner join hire_vehicles h on v.vehicle_id = h.vehicle_id\n" +
-            "group by v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id", nativeQuery = true)
-    public List<Vehicle> findTop10() {
-        return vehicleResp.findTop10();
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))   " +
+            "from Vehicle v left join HireVehicle h on v.vehicleId=h.vehicle.vehicleId  where v.store.storeId = ?1 group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    public List<VehicleDto> findByStoreId(Integer storeId) {
+        return vehicleResp.findByStoreId(storeId);
     }
 
     @Override
@@ -256,23 +246,4 @@ public class VehicleServiceImpl implements VehicleSerivce {
     public <S extends Vehicle, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return vehicleResp.findBy(example, queryFunction);
     }
-
-    @Override
-    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
-    public List<Vehicle> findByStore(Integer storeId) {
-        return vehicleResp.findByStore(storeId);
-    }
-
-    @Override
-    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
-    public List<Vehicle> findVehiclesBybrandId(Integer brandId) {
-        return vehicleResp.findVehiclesBybrandId(brandId);
-    }
-
-    @Override
-    @Query(value = "select v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id from vehicles v inner join hire_vehicles h on v.vehicle_id = h.vehicle_id where h.cus_username like ?1 group by v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id", nativeQuery = true)
-    public List<Vehicle> findByUsernameWasHire(String username) {
-        return vehicleResp.findByUsernameWasHire(username);
-    }
-
 }

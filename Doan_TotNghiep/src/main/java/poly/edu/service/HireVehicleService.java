@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import poly.edu.dto.HireDto;
 import poly.edu.model.HireVehicle;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public interface HireVehicleService {
+
+
     List<HireVehicle> findAll();
 
     List<HireVehicle> findAll(Sort sort);
@@ -80,4 +83,12 @@ public interface HireVehicleService {
 
     @Query("SELECT o FROM HireVehicle o WHERE o.customer.cusUsername like ?1")
     List<HireVehicle> findHireVehicleBycusUsername(String username);
+
+
+    @Query("select new poly.edu.dto.HireDto(h.hireId,h.status,h.TotalMoney,h.hireDate,h.returnDate,h.vehicle." +
+            "vehicleId,h.vehicle.vehicleName,h.vehicle.rentByDay,h.vehicle.image,h.vehicle.address,v.store) from HireVehicle h inner join Vehicle v " +
+            "on h.vehicle.vehicleId=v.vehicleId where h.customer.cusUsername like ?1 and h.status=?2" +
+            " group by h.hireId,h.status,h.TotalMoney,h.hireDate,h.returnDate,h.vehicle.vehicleId," +
+            "h.vehicle.vehicleName,h.vehicle.rentByDay,h.vehicle.image,h.vehicle.address,v.store")
+    List<HireDto> findHistoryHireByCusUsername(String cusUsername, Boolean status);
 }

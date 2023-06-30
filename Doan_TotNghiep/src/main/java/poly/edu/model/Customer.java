@@ -21,11 +21,13 @@ public class Customer implements Serializable {
     private String password;
     private String email;
     private String phone;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String fullname;
     private String image;
     private Boolean gender;
     private String identityCard; // Số chứng minh nhân dân
     private String license;  //Bằng lái xe
+    @Column(columnDefinition = "nvarchar(100)")
     private String address;
     private Long cart;  //ví tiền
 

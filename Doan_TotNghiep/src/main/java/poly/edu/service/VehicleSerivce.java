@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import poly.edu.dto.VehicleDto;
 import poly.edu.model.Vehicle;
 
 import java.util.List;
@@ -13,29 +14,43 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public interface  VehicleSerivce {
+
+
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))   " +
+            "from Vehicle v inner join HireVehicle h on v.vehicleId=h.vehicle.vehicleId group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    List<VehicleDto> findTop8();
+
     List<Vehicle> findByVehicleNameContaining(String key);
 
-    @Query("Select v  from vehicles v inner join stores on v.store_id = stores.store_id where stores.address like ?1")
+    @Query("Select v from Vehicle v where v.store.address like  ?1")
     List<Vehicle> searchByAddress(String key);
 
+    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
+    List<Vehicle> findByStore(Integer storeId);
 
+    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
+    List<Vehicle> findVehiclesBybrandId(Integer brandId);
 
+    List<Vehicle> findByAddressContaining(String address);
 
-    Vehicle addVehicle(Vehicle vehicle);
+    @Query("select v from Vehicle v where v.address like ?1 and v.rentByDay between ?2 and ?3")
+    List<Vehicle> findByAddressAndPrice(String address, Double minPrice, Double maxPrice);
 
-    List<Vehicle> getAll();
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))" +
+            "from Vehicle v inner join HireVehicle h on v.vehicleId=h.vehicle.vehicleId  where v.vehicleId = ?1 group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    VehicleDto findVehicleDtoById(Integer vehicleId);
 
-    Vehicle updateVehicle(Vehicle vehicle);
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))   " +
+            "from Vehicle v inner join HireVehicle h    on v.vehicleId=h.vehicle.vehicleId where h.customer.cusUsername = ?1 group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    List<VehicleDto> findVehicleByCustomerWasHire(String cusUsername);
 
-    void delete(Integer vehicleId);
-
-    Vehicle getVehicleById(Integer vehicleId);
-
-    List<Vehicle> searchVehicleByKey(String key);
-
-    @Query(value = "select top 10 v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id,count(h.vehicle_id) as 'SL'  from vehicles v inner join hire_vehicles h on v.vehicle_id = h.vehicle_id\n" +
-            "group by v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id", nativeQuery = true)
-    List<Vehicle> findTop10();
+    @Query("select new poly.edu.dto.VehicleDto(v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring," +
+            "v.description,v.address,v.store,v.brand,count(h.vehicle.vehicleId))   " +
+            "from Vehicle v left join HireVehicle h on v.vehicleId=h.vehicle.vehicleId  where v.store.storeId = ?1 group by v.vehicleId,v.vehicleName,v.rentByDay,v.image,v.image2,v.image3,v.statusHiring, v.description,v.address,v.store,v.brand")
+    List<VehicleDto> findByStoreId(Integer storeId);
 
     List<Vehicle> findAll();
 
@@ -101,14 +116,4 @@ public interface  VehicleSerivce {
     <S extends Vehicle> boolean exists(Example<S> example);
 
     <S extends Vehicle, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
-
-    @Query("SELECT o FROM Vehicle o WHERE o.store.storeId = ?1")
-    List<Vehicle> findByStore(Integer storeId);
-
-    @Query("SELECT o FROM Vehicle o WHERE o.brand.brandId = ?1")
-    List<Vehicle> findVehiclesBybrandId(Integer brandId);
-
-
-    @Query(value = "select v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id from vehicles v inner join hire_vehicles h on v.vehicle_id = h.vehicle_id where h.cus_username like ?1 group by v.vehicle_id,v.description,v.brand_id,v.image,v.rent_by_day,v.status_hiring,v.vehicle_name,v.store_id", nativeQuery = true)
-    List<Vehicle> findByUsernameWasHire(String username);
 }

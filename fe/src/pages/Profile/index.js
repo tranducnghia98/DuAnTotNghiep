@@ -6,12 +6,10 @@ import Image from "~/Component/Images";
 import images from "~/assets/images";
 import Button from "~/Component/Button";
 import { Link } from "react-router-dom";
-import { FaEnvelope, FaPhoneAlt, FaTransgender, FaUser, FaUserTie } from 'react-icons/fa';
-import { FaBeer } from 'react-icons/fa';
-import { changeBackgroundimage } from "~/Component/Icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faUsers } from "@fortawesome/free-solid-svg-icons";
-import VehicleItem from "./Vehicle/VehicleItem";
+import ProductItem from "~/Component/ProductItem/ProductItem";
 
 const cx = classNames.bind(styles)
 
@@ -81,7 +79,7 @@ function Profile() {
           <div className={cx('profile-user')}>
             <div className={cx('profile-user-avatar')}>
               <div className={cx('avatar')}>
-                <Image className={cx('avatar-img')} src={customer.image ? (customer.image) : (images.image2)} />
+                <Image className={cx('avatar-img')} src={customer.image ? (`../images/${customer.image}`) : (images.image2)} />
               </div>
             </div>
             <div className={cx('username')}>
@@ -95,117 +93,92 @@ function Profile() {
 
 
         </div>
-        <div className={cx('profile-container')}>
-          <section className={cx('body-row')}>
-            <section className={cx('body-col')}>
-              <div className={cx('content-left')}>
-                <div className={cx('box-wrapper')}>
-                  <h4 className={cx('title')}>Giới thiệu</h4>
-                  <div className={cx('box-wrapper-item')}>
-                    <FontAwesomeIcon className={cx('box-wrapper-icon')} icon={faUsers}></FontAwesomeIcon>
-                    <span className={cx('title-about')}>khách hàng tiềm năng của <span className={cx('trademark')}>Mikaa</span></span>
-                  </div>
-                </div>
-                <div className={cx('box-wrapper')}>
-                  <h4 className={cx('title')}>Thông tin</h4>
-                  <div className={cx('box-wrapper-item')}>
-                    <span className={cx('title-item')}>Tên đăng nhập: </span>
-                    <span className={cx('title-about')}>{customer.cusUsername}</span>
-                  </div>
-                  <div className={cx('box-wrapper-item')}>
-                    <span className={cx('title-item')}>Họ tên: </span>
-                    <span className={cx('title-about')}>{customer.fullname}</span>
-                  </div>
-                  <div className={cx('box-wrapper-item')}>
-                    <span className={cx('title-item')}>Email: </span>
-                    <span className={cx('title-about')}>{customer.email}</span>
-                  </div>
-                  <div className={cx('box-wrapper-item')}>
-                    <span className={cx('title-item')}>Số điện thoại: </span>
-                    <span className={cx('title-about')}>{customer.phone}</span>
-                  </div>
-                  <div className={cx('box-wrapper-item')}>
-                    <span className={cx('title-item')}>Địa chỉ: </span>
-                    <span className={cx('title-about')}>{customer.address}</span>
-                  </div>
-                  <div className={cx('box-wrapper-item')}>
-                    <span className={cx('title-item')}>Ví: </span>
-                    <span className={cx('title-about')}>{customer.cart}</span>
-                  </div>
-                  <div className={cx('box-wrapper-item')}>
-                    <Button primary small>Chỉnh sửa</Button>
-                    <Button primary small>Đổi mật khẩu</Button>
-                    {store.length===0 ?(<Button to={`/changeToStore/${customer.cusUsername}`} primary small>chuyển đổi cửa hàng</Button>)
-                    :(<Button to={`/store/${customer.cusUsername}`} primary small>Cửa hàng của bạn</Button>)}
 
-                    {/* {store.length === 0 ?
-                      (<Link to={`/changeToStore/${customer.cusUsername}`} >
-                        <Button primary small>chuyển đổi thành tài khoản doanh nghiệp</Button>
-
-                      </Link>
-                      ) : (<Link to={`/store/${customer.cusUsername}`} >
-                        <Button primary small >cửa hàng của bạn</Button>
-                      </Link>)} */}
-
-                  </div>
-                </div>
-                <div className={cx('box-wrapper')}>
-                  <h4 className={cx('title')}>Hoạt động gần đây</h4>
-                  <div className={cx('box-wrapper-item')}>
-                    {hireVehicles.map((hire, index) => {
-                      return (
-                        <Link className={cx('hire-item-link')}>
-                          <h4 className={cx('title-about')}>Bạn Đã thuê xe vào {hire.hireDate} </h4>
-                        </Link>
-
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-            </section>
-            <section className={cx('body-col-2')}>
-              <div className={cx('box-wrapper')}>
-                <h4 className={cx('title')}>Các sản phẩm bạn đã trải nghiệm</h4>
-                <div className={cx('hireVehicle-history')}>
-                  {vehicles.map((vehicle, index) => {
-                    return (
-                      <VehicleItem value={vehicle}></VehicleItem>
-                    )
-                  })}
-                </div>
-              </div>
-            </section>
-          </section>
-        </div>
       </div>
-      {/* <Image className={cx("profile-img")} src={customer.image ? (customer.image) : (images.image1)}></Image> */}
-      {/* 
-        <div >
-          <Image className={cx("profile-img")}  src={images.image1}></Image>
+      <div className={cx('profile-container')}>
+        <section className={cx('body-row')}>
+          <section className={cx('body-col')}>
+            <div className={cx('content-left')}>
+              <div className={cx('box-wrapper')}>
+                <h4 className={cx('title')}>Giới thiệu</h4>
+                <div className={cx('box-wrapper-item')}>
+                  <FontAwesomeIcon className={cx('box-wrapper-icon')} icon={faUsers}></FontAwesomeIcon>
+                  <span className={cx('title-about')}>khách hàng tiềm năng của <span className={cx('trademark')}>Mikaa</span></span>
+                </div>
+              </div>
+              <div className={cx('box-wrapper')}>
+              <div className={cx('content')}>
+              <h4 className={cx('title')}>Thông tin</h4>
+              </div>
+                <div className={cx('info-box')}>
+                  
+                  <div className={cx('info-box-item')}>
+                    <p>Tên đăng nhập</p>
+                    <p className={cx('main')}>{customer.cusUsername}</p>
+                  </div>
+                  <div className={cx('info-box-item')}>
+                    <p>Họ tên</p>
+                    <p className={cx('main')}>{customer.fullname}</p>
+                  </div>
+                  <div className={cx('info-box-item')}>
+                    <p>Email</p>
+                    <p className={cx('main')}>{customer.email}</p>
+                  </div>
+                  <div className={cx('info-box-item')}>
+                    <p>Phone</p>
+                    <p className={cx('main')}>{customer.phone}</p>
+                  </div>
+                  <div className={cx('info-box-item')}>
+                    <p>Địa chỉ</p>
+                    <p className={cx('main')}>{customer.address}</p>
+                  </div>
+                  <div className={cx('info-box-item')}>
+                    <p>Tài khoản</p>
+                    <p className={cx('main')}>{customer.cart}đ</p>
+                  </div>
 
+                </div>
+                <div className={cx('btn-group')}>
+                  <Button primary green small>Chỉnh sửa</Button>
+                  <Button primary green small>Đổi mật khẩu</Button>
+                  <Button primary green small>Nạp tiền</Button>
+                  {store.length === 0 ? (<Button to={`/changeToStore/${customer.cusUsername}`} primary green small>chuyển đổi cửa hàng</Button>)
+                    : (<Button to={`/store/${customer.cusUsername}`} primary green small>Cửa hàng của bạn</Button>)}
+                </div>
+              </div>
+
+            </div>
+          </section>
+          <section className={cx('body-col-2')}>
+            <div className={cx('box-wrapper')}>
+              <h4 className={cx('title')}>Hoạt động gần đây</h4>
+              <div className={cx('box-wrapper-item')}>
+                {hireVehicles.map((hire, index) => {
+                  return (
+                    <Link className={cx('hire-item-link')}>
+                      <h4 className={cx('title-about')}>Bạn Đã thuê xe vào {hire.hireDate} </h4>
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <div className={cx('box-wrapper')}>
+          <div className={cx('title-vehicle')}>
+            <h4 className={cx('title-vehicle-wasHire')}>Các xe bạn đã trải nghiệm</h4>
+          </div>
+          <div className={cx('hireVehicle-history')}>
+            {vehicles.map((vehicle, index) => {
+              return (
+                <ProductItem vehicle={vehicle} />
+              )
+            })}
+          </div>
         </div>
 
-        <hr className="divider" />
-        <h2> <FaUser />Username : <span>{customer.cusUsername}</span></h2>
-        <h2> <FaUserTie />  Fullname: <span>{customer.fullname}</span></h2>
-        <h2><FaEnvelope /> Gmail: <span>{customer.email}</span></h2>
-        <h2> <FaTransgender /> Gender:  <input type="radio" name="gender" value="male" checked={customer.gender === true} />Male
-          <input type="radio" name="gender" value="female" defaultChecked={customer.gender === false} />Female
-        </h2>
-        <h2> <FaPhoneAlt /> Phone: <span>{customer.phone}</span></h2>
-
-        <div className={cx('profile-action')}>
-          {store.length === 0 ?
-            (<Link to={`/changeToStore/${customer.cusUsername}`} >
-              <Button primary >Convert to a business account</Button>
-
-            </Link>
-            ) : (<Link to={`/store/${customer.cusUsername}`} >
-              <button className={cx('button-19')} role="button">GO TO SHOP</button>
-            </Link>)}
-        </div> */}
-
+      </div>
     </div>
   )
 }

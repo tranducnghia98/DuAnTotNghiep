@@ -17,15 +17,17 @@ public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String note;
     private long star;
     @Temporal(TemporalType.DATE)
     @Column(name = "CommentDate")
-    Date Commentdate = new Date();
+    Date commentDate ;
 
     @ManyToOne
     @JoinColumn(name = "hireId")
     HireVehicle hireVehicle;
+
 
     @ManyToOne
     @JoinColumn(name = "CusUsername")

@@ -18,6 +18,7 @@ public class Brand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer brandId;
+    @Column(columnDefinition = "nvarchar(100) not null")
     private String nameBrand;
     private String location;
 

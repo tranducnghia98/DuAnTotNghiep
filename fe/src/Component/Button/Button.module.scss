@@ -10,7 +10,7 @@
     border-radius: 4px;
     cursor: pointer;
     background-color: var(--white);
-    border: 1px solid transparent;
+    // border: 1px solid transparent;
     user-select: none;
 
     +.wrapper {
@@ -82,4 +82,12 @@
 .large {
     padding: 14px 16px;
     min-width: 140px;
+}
+.green{
+    background-color: #5fcf86;
+
+    &:hover {
+        border-color: var(--primary);
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0,0.06)),#5fcf86;
+    }
 }

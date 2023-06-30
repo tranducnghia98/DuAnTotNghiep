@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    min-height: 1000px;
+
     font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
@@ -52,10 +52,24 @@ input, button,[tabindex] {
     outline: none;
     border: none;
 }
+h1,h2{
+    font-weight: 700;
+}
+h2{
+    font-size: 3.5rem;
+}
+h3{
+    font-weight: 700;
+    margin: 0;
+}
+
 
 a {
     color: var(--text-color);
     text-decoration: none;
+}
+p{
+    margin: 0;
 }
 
 //font embedded

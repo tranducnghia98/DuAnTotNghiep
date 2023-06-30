@@ -72,7 +72,7 @@ function Search() {
 
     // Using a wrapper <div> or <span> tag around the reference element solves 
     // this by creating a new parentNode context
-    <div>
+    <div className={cx("search-container")}>
       <HeadlessTippy
         visible={showResult && searchResult.length >0}
         interactive
@@ -80,7 +80,7 @@ function Search() {
           <div className={cx("search-result")} tabIndex="-1" {...attrs}>
             <ProperWrapper>
   
-              <h4 className={cx("search-title")}>Account</h4>
+              <h4 className={cx("search-title")}>Kết Quả</h4>
               {searchResult.map((result) =>(
                 <AccountItem key={result.id} data= {result}></AccountItem>
               ))}
@@ -97,7 +97,7 @@ function Search() {
               ref={inputRef}
               value={searchValue}
               type="text"
-              placeholder="Search accounts and videos"
+              placeholder="Tìm kiếm theo địa chỉ "
               spellCheck={false}
               onChange={handleChange}
               onFocus={() =>setShowResult(true)}

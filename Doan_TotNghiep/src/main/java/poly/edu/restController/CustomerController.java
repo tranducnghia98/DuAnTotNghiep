@@ -38,13 +38,8 @@ public class CustomerController {
 
     // API để cập nhật thông tin khách hàng
     @PutMapping("/update/{cusUsername}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable String cusUsername, @RequestBody Customer customerDetails) {
-        Customer updatedCustomer = customerService.updateCustomer(cusUsername, customerDetails);
-        if (updatedCustomer != null) {
-            return ResponseEntity.ok(updatedCustomer);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Customer update(@PathVariable("cusUsername") String cusUsername,@RequestBody Customer customer){
+        return customerService.saveAndFlush(customer);
     }
 
     // API để xóa một khách hàng

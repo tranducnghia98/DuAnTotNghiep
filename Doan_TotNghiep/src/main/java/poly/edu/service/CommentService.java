@@ -4,6 +4,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import poly.edu.model.Comment;
 
@@ -76,4 +77,7 @@ public interface CommentService {
     <S extends Comment> boolean exists(Example<S> example);
 
     <S extends Comment, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
+
+    @Query("select c from Comment c inner  join HireVehicle h on c.hireVehicle.hireId = h.hireId where h.vehicle.vehicleId = ?1")
+    List<Comment> findCommentByVehicleId(Integer VehicleId);
 }
